@@ -469,6 +469,10 @@
   }
   .signup input::placeholder{ color: var(--slate); }
   .signup input:focus{ outline: none; border-color: var(--magenta); }
+  .signup-msg{ font-size: 13px; color: var(--slate); margin-top: -78px; margin-bottom: 78px; min-height: 18px; }
+  .signup-msg.success{ color: var(--gold); }
+  .signup-msg.error{ color: var(--magenta); }
+  .signup input:disabled, .signup button:disabled{ opacity: 0.6; cursor: not-allowed; }
   .logo-stamp{
     height: 26px; width: auto;
     background: var(--cloud);
@@ -678,9 +682,10 @@
     <div class="footer-cta reveal">
       <h2>Don't miss the <span class="accent">next drop.</span></h2>
       <div class="signup">
-        <input type="email" placeholder="your@email.com">
-        <button class="btn btn-primary">Notify Me</button>
+        <input type="email" id="signupEmail" placeholder="your@email.com">
+        <button class="btn btn-primary" id="signupBtn">Notify Me</button>
       </div>
+      <p id="signupMsg" class="signup-msg"></p>
     </div>
     <div class="footer-bottom">
       <div style="display:flex;align-items:center;gap:14px;">
@@ -723,5 +728,69 @@
   revealEls.forEach(el => io.observe(el));
 </script>
 
+
+<script>
+(function(){
+  var SUPABASE_URL = "https://ektvcxdldpwoteqnvjnh.supabase.co";
+  var SUPABASE_ANON_KEY = "sb_publishable_85fBPkQIal8SNcMBY1PPXw_zuc9cgWw";
+
+  var btn = document.getElementById('signupBtn');
+  var input = document.getElementById('signupEmail');
+  var msg = document.getElementById('signupMsg');
+
+  function setMsg(text, cls){
+    msg.textContent = text;
+    msg.className = 'signup-msg' + (cls ? ' ' + cls : '');
+  }
+
+  function isValidEmail(email){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  if (btn) {
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      var email = (input.value || '').trim();
+
+      if (!isValidEmail(email)) {
+        setMsg('Please enter a valid email.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      input.disabled = true;
+      setMsg('Sending...');
+
+      fetch(SUPABASE_URL + '/rest/v1/keirok_subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ email: email })
+      })
+      .then(function(res){
+        if (res.ok) {
+          setMsg("You're on the list! 🎉", 'success');
+          input.value = '';
+        } else if (res.status === 409) {
+          setMsg("You're already subscribed.", 'success');
+        } else {
+          setMsg('Something went wrong. Try again.', 'error');
+        }
+      })
+      .catch(function(){
+        setMsg('Network error. Try again.', 'error');
+      })
+      .finally(function(){
+        btn.disabled = false;
+        input.disabled = false;
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>
