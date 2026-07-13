@@ -186,10 +186,13 @@
     background:
       linear-gradient(180deg, rgba(8,7,12,0.1) 0%, rgba(8,7,12,0.4) 48%, rgba(8,7,12,0.98) 94%);
   }
-  .hero-tag{
+  .hero-tracklist{
     position:absolute;
     top: 110px; left: 32px;
     z-index: 3;
+    display:flex; flex-direction:column; gap: 8px;
+  }
+  .hero-track-btn{
     display:inline-flex; align-items:center; gap: 10px;
     padding: 7px 14px;
     border: 1px solid var(--line);
@@ -197,10 +200,19 @@
     font-size: 11px; color: var(--gold);
     background: rgba(8,7,12,0.4);
     backdrop-filter: blur(6px);
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: border-color .3s, color .3s;
   }
-  .hero-tag::before{
+  .hero-track-btn:hover{ border-color: var(--magenta); }
+  .hero-track-btn::before{
     content:'';
-    width: 6px; height: 6px; border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    background: var(--slate);
+    transition: background .3s;
+  }
+  .hero-track-btn.playing{ color: var(--cloud); border-color: var(--magenta); }
+  .hero-track-btn.playing::before{
     background: var(--magenta);
     box-shadow: 0 0 10px var(--magenta);
     animation: pulse 1.8s ease-in-out infinite;
@@ -479,7 +491,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .marquee-track, .blob, .hero-title .line, .hero-tag::before{ animation: none !important; }
+    .marquee-track, .blob, .hero-title .line, .hero-track-btn::before{ animation: none !important; }
     .hero-title .line{ transform: translateY(0); }
     html{ scroll-behavior: auto; }
   }
@@ -524,7 +536,10 @@
 <section class="hero" id="heroSection">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-shade"></div>
-  <span class="hero-tag mono">001 · Keiro K</span>
+  <div class="hero-tracklist">
+    <button type="button" class="hero-track-btn mono" data-src="music/dime-que-si-remix.mp3">001 · Dime Que Sí</button>
+    <button type="button" class="hero-track-btn mono" data-src="music/happy-birthday-mama.mp3">002 · Happy Birthday Mama</button>
+  </div>
   <div class="wrap hero-content">
     <h1 class="hero-title">
       <span class="line">Dime Que</span>
@@ -725,6 +740,33 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+
+  // Hero tracklist play/pause
+  const trackBtns = document.querySelectorAll('.hero-track-btn');
+  let currentAudio = null;
+  trackBtns.forEach((btn) => {
+    const audio = new Audio(btn.dataset.src);
+    btn.addEventListener('click', () => {
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        document.querySelectorAll('.hero-track-btn').forEach((b) => b.classList.remove('playing'));
+      }
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+        currentAudio = audio;
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+        currentAudio = null;
+      }
+    });
+    audio.addEventListener('ended', () => {
+      btn.classList.remove('playing');
+      currentAudio = null;
+    });
+  });
 </script>
 
 
