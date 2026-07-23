@@ -357,10 +357,11 @@
 
   /* ---------- LYRICS ---------- */
   .lyrics{ background: var(--ink-soft); }
-  .lyrics-head{ max-width: 640px; margin: 0 auto 48px; }
+  .lyrics-song{ max-width: 640px; margin: 0 auto 96px; padding-top: 96px; border-top: 1px solid var(--line); }
+  .lyrics-song:first-of-type{ margin-top: 0; padding-top: 0; border-top: none; }
+  .lyrics-head{ margin-bottom: 48px; }
   .lyrics-head h2{ font-family:'Anton', sans-serif; font-weight:400; font-size: clamp(32px, 4.5vw, 48px); margin-bottom: 10px; }
   .lyrics-head p{ color: var(--slate); font-size: 15px; }
-  .lyrics-body{ max-width: 640px; margin: 0 auto; }
   .lyrics-body p{ color: var(--cloud); font-size: 16px; line-height: 1.9; margin-bottom: 26px; white-space: pre-line; }
   .lyrics-body p.chorus{ color: var(--gold); }
 
@@ -660,11 +661,12 @@
 <section class="lyrics" id="lyrics">
   <div class="wrap">
     <div class="eyebrow mono centered reveal">Lyrics</div>
-    <div class="lyrics-head reveal centered" style="text-align:center;">
+    <div class="lyrics-song reveal">
+    <div class="lyrics-head centered" style="text-align:center;">
       <h2>Sirena</h2>
       <p>Keiro K — Sirena (Mermaid)</p>
     </div>
-    <div class="lyrics-body reveal">
+    <div class="lyrics-body">
       <p>Ella vive en el mar dice ven</p>
       <p>Moonlit water
 Sand between my toes
@@ -728,6 +730,90 @@ Sirena sirena hasta el amanecer</p>
       <p>Sirena sirena
 Baila baila
 Sirena sirena</p>
+    </div>
+    </div>
+
+    <div class="lyrics-song reveal">
+    <div class="lyrics-head centered" style="text-align:center;">
+      <h2>Dime Que Sí</h2>
+      <p>Keiro K — Dime Que Sí (Remix)</p>
+    </div>
+    <div class="lyrics-body">
+      <p>Yeah
+Late nights
+No looking back</p>
+      <p>City lights all on my skin
+Too many places that I've been
+I don't chase I let it flow
+If it's real then let it show
+No more games no more lies
+I can read it in your eyes
+Todo cambia con tu voz
+Ahora sé quién soy</p>
+      <p>Stay a little closer
+Don't let this fade away
+Baila conmigo
+We don't need a reason today</p>
+      <p class="chorus">Dime que sí
+Don't leave me lonely tonight
+Quédate aquí
+Everything feels so right
+One more dance
+One more chance
+Under the moonlight sky
+Tú y yo
+Nunca say goodbye</p>
+      <p>Corazón
+Can you hear my soul
+Take it slow
+Never let me go</p>
+      <p class="chorus">Dime que sí
+We're alive inside this dream
+Quédate aquí
+Nothing's ever what it seems
+One more dance
+One more night
+Feel the rhythm feel the fire
+Tú y yo
+Higher and higher</p>
+      <p>Late nights city glow
+Your heartbeat moving slow
+No tomorrow in our minds
+Just this moment frozen in time
+Cada paso junto a ti
+Feels like where I'm meant to be
+No more running no disguise
+You're the sunrise in my eyes</p>
+      <p>Every street has your name
+Nothing ever feels the same
+Lost before you came around
+Now my feet don't touch the ground
+Cuando ríes todo va
+Like the waves upon the mar
+No more shadows in the blue
+All I ever want is you</p>
+      <p>Hold me a little longer
+Let the music lead the way
+Baila conmigo
+Till the night becomes the day</p>
+      <p class="chorus">Dime que sí
+Don't leave me lonely tonight
+Quédate aquí
+Everything feels so right
+One more dance
+One more chance
+Under the moonlight sky
+Tú y yo
+Nunca say goodbye</p>
+      <p>Oh-oh quédate aquí
+Oh-oh stay with me
+Sin miedo sin final
+Love is written in the stars tonight
+One last kiss one last fire
+Take me higher higher
+Tú y yo
+Forever higher</p>
+    </div>
     </div>
   </div>
 </section>
