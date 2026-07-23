@@ -357,9 +357,10 @@
 
   /* ---------- LYRICS ---------- */
   .lyrics{ background: var(--ink-soft); }
-  .lyrics-song{ max-width: 640px; margin: 0 auto 96px; padding-top: 96px; border-top: 1px solid var(--line); }
-  .lyrics-song:first-of-type{ margin-top: 0; padding-top: 0; border-top: none; }
-  .lyrics-head{ margin-bottom: 48px; }
+  .lyrics-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 64px; align-items: start; max-width: 1180px; margin: 0 auto; }
+  .lyrics-song{ padding-left: 48px; border-left: 1px solid var(--line); }
+  .lyrics-song:first-child{ padding-left: 0; border-left: none; }
+  .lyrics-head{ margin-bottom: 32px; }
   .lyrics-head h2{ font-family:'Anton', sans-serif; font-weight:400; font-size: clamp(32px, 4.5vw, 48px); margin-bottom: 10px; }
   .lyrics-head p{ color: var(--slate); font-size: 15px; }
   .lyrics-body p{ color: var(--cloud); font-size: 16px; line-height: 1.9; margin-bottom: 26px; white-space: pre-line; }
@@ -507,7 +508,9 @@
   }
 
   @media (max-width: 860px){
-    .music-grid, .about-grid, .gallery-grid{ grid-template-columns: 1fr; }
+    .music-grid, .about-grid, .gallery-grid, .lyrics-grid{ grid-template-columns: 1fr; }
+    .lyrics-song{ padding-left: 0; border-left: none; padding-top: 64px; border-top: 1px solid var(--line); }
+    .lyrics-song:first-child{ padding-top: 0; border-top: none; }
     .tracks-row{ grid-template-columns: 1fr; }
     .gallery-item.tall, .gallery-item.wide{ min-height: 300px; }
     .navlinks{ display:none; }
@@ -661,6 +664,7 @@
 <section class="lyrics" id="lyrics">
   <div class="wrap">
     <div class="eyebrow mono centered reveal">Lyrics</div>
+    <div class="lyrics-grid">
     <div class="lyrics-song reveal">
     <div class="lyrics-head centered" style="text-align:center;">
       <h2>Sirena</h2>
@@ -813,6 +817,7 @@ One last kiss one last fire
 Take me higher higher
 Tú y yo
 Forever higher</p>
+    </div>
     </div>
     </div>
   </div>
